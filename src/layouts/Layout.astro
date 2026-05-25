@@ -1,0 +1,65 @@
+---
+import '../styles/global.css';
+import { site, translations } from '../data/site';
+import CustomCursor from '../components/ui/CustomCursor.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = translations.en.seo.title, description = translations.en.seo.description } = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, site.seo.siteUrl).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+    />
+  </head>
+  <body class="min-h-screen bg-background text-text antialiased">
+    <CustomCursor />
+    <slot />
+  </body>
+</html>
+
+<script>
+  // Re-apply saved locale on every page load for all [data-en] elements
+  type Locale = 'en' | 'id';
+
+  function applyLocale(locale: Locale) {
+    document.querySelectorAll<HTMLElement>('[data-en]').forEach((el) => {
+      const text = locale === 'en' ? el.dataset.en! : (el.dataset.id || el.dataset.en!);
+      // Only update text nodes, not elements with child elements (like buttons with icons)
+      if (el.children.length === 0) {
+        el.textContent = text;
+      }
+    });
+
+    // Sync lang toggle button label
+    const next: Locale = locale === 'en' ? 'id' : 'en';
+    document.querySelectorAll<HTMLElement>('#lang-label, #lang-label-mobile').forEach((el) => {
+      el.textContent = next.toUpperCase();
+    });
+
+    document.documentElement.lang = locale;
+  }
+
+  const saved = (localStorage.getItem('locale') as Locale) || 'en';
+  document.addEventListener('DOMContentLoaded', () => applyLocale(saved));
+</script>

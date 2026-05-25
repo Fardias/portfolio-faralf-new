@@ -1,0 +1,91 @@
+---
+import { site, translations } from '../../data/site';
+import MuiIcon from '../icons/MuiIcon';
+
+const en = translations.en.contact;
+const id = translations.id.contact;
+
+const contactLinks = [
+  {
+    href: site.whatsappUrl,
+    labelEn: en.whatsappLabel,
+    labelId: id.whatsappLabel,
+    icon: 'WhatsApp' as const,
+    primary: true,
+  },
+  {
+    href: `mailto:${site.email}`,
+    labelEn: site.email,
+    labelId: site.email,
+    icon: 'Email' as const,
+    primary: false,
+  },
+  {
+    href: site.github,
+    labelEn: 'GitHub',
+    labelId: 'GitHub',
+    icon: 'GitHub' as const,
+    primary: false,
+  },
+  {
+    href: site.linkedin,
+    labelEn: 'LinkedIn',
+    labelId: 'LinkedIn',
+    icon: 'LinkedIn' as const,
+    primary: false,
+  },
+];
+---
+
+<section id="contact" class="py-16 sm:py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div
+      class="nb-shadow-lg mx-auto max-w-2xl border-2 border-border bg-surface px-6 py-12 text-center sm:px-10 sm:py-14"
+    >
+      <h2
+        class="text-3xl font-black tracking-tight text-text sm:text-4xl"
+        data-en={en.headline}
+        data-id={id.headline}
+      >
+        {en.headline}
+      </h2>
+      <p
+        class="mt-4 text-base font-medium text-muted sm:text-lg"
+        data-en={en.subtext}
+        data-id={id.subtext}
+      >
+        {en.subtext}
+      </p>
+      <div class="mt-10 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
+        {
+          contactLinks.map((link) =>
+            link.primary ? (
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="nb-shadow nb-shadow-hover inline-flex min-h-11 items-center justify-center gap-2 border-2 border-border bg-primary px-6 py-3 text-sm font-bold text-white"
+                data-en={link.labelEn}
+                data-id={link.labelId}
+              >
+                <MuiIcon name={link.icon} size={22} className="text-white" />
+                {link.labelEn}
+              </a>
+            ) : (
+              <a
+                href={link.href}
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                aria-label={link.labelEn}
+                class="nb-shadow nb-shadow-hover inline-flex min-h-11 items-center justify-center gap-2 border-2 border-border bg-background px-5 py-3 text-sm font-bold text-text hover:bg-surface"
+              >
+                <MuiIcon name={link.icon} size={22} className="text-primary" />
+                <span class="hidden sm:inline">{link.labelEn}</span>
+              </a>
+            ),
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

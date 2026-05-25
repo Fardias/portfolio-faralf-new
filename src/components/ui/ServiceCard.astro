@@ -1,0 +1,37 @@
+---
+import type { Service } from '../../data/site';
+import MuiIcon from '../icons/MuiIcon';
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+
+// Access bilingual fields via type casting since satisfies Service[] strips extra fields
+const s = service as Service & { titleId?: string; descriptionId?: string };
+---
+
+<article
+  class="nb-shadow nb-shadow-hover flex h-full flex-col border-2 border-border bg-surface p-6"
+>
+  <div
+    class="mb-4 inline-flex h-12 w-12 items-center justify-center border-2 border-border bg-accent text-primary"
+  >
+    <MuiIcon name={service.icon} size={28} className="text-text" />
+  </div>
+  <h3
+    class="text-xl font-black text-text"
+    data-en={service.title}
+    data-id={s.titleId ?? service.title}
+  >
+    {service.title}
+  </h3>
+  <p
+    class="mt-2 flex-1 text-sm leading-relaxed text-muted"
+    data-en={service.description}
+    data-id={s.descriptionId ?? service.description}
+  >
+    {service.description}
+  </p>
+</article>

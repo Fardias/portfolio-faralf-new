@@ -1,0 +1,40 @@
+---
+import { site, translations } from '../../data/site';
+import MuiIcon from '../icons/MuiIcon';
+
+const year = new Date().getFullYear();
+const en = translations.en.footer;
+const id = translations.id.footer;
+
+const socialLinks = [
+  { href: `mailto:${site.email}`, label: 'Email', icon: 'Email' as const },
+  { href: site.github, label: 'GitHub', icon: 'GitHub' as const },
+  { href: site.linkedin, label: 'LinkedIn', icon: 'LinkedIn' as const },
+];
+---
+
+<footer class="border-t-2 border-border bg-surface">
+  <div
+    class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-8 sm:flex-row sm:px-6 lg:px-8"
+  >
+    <p class="text-sm font-bold text-muted">
+      &copy; {year} {site.name}.
+      <span data-en={en.rights} data-id={id.rights}>{en.rights}</span>
+    </p>
+    <div class="flex items-center gap-3">
+      {
+        socialLinks.map((link) => (
+          <a
+            href={link.href}
+            target={link.href.startsWith('http') ? '_blank' : undefined}
+            rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+            aria-label={link.label}
+            class="nb-shadow nb-shadow-hover inline-flex min-h-11 min-w-11 items-center justify-center border-2 border-border bg-background text-primary"
+          >
+            <MuiIcon name={link.icon} size={22} className="text-primary" />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</footer>

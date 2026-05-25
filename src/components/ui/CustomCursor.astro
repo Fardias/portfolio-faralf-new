@@ -1,0 +1,115 @@
+---
+---
+
+<!-- Custom cursor elements -->
+<div id="cursor-dot" aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
+
+<style>
+  #cursor-dot,
+  #cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+  }
+
+  /* Small solid dot — follows cursor exactly */
+  #cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #f97316;
+    border: 2px solid #0f0f0f;
+  }
+
+  /* Larger ring — lags behind for smooth feel */
+  #cursor-ring {
+    width: 36px;
+    height: 36px;
+    border: 2.5px solid #0f0f0f;
+    background: transparent;
+    transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, opacity 0.3s ease;
+  }
+
+  /* Hover state — ring expands and fills */
+  #cursor-ring.is-hovering {
+    width: 52px;
+    height: 52px;
+    background-color: rgba(249, 115, 22, 0.15);
+    border-color: #f97316;
+  }
+
+  /* Hide on touch devices */
+  @media (hover: none) {
+    #cursor-dot,
+    #cursor-ring {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const dot = document.getElementById('cursor-dot')!;
+  const ring = document.getElementById('cursor-ring')!;
+
+  // Hide default cursor globally
+  document.documentElement.style.cursor = 'none';
+
+  let mouseX = 0;
+  let mouseY = 0;
+  let ringX = 0;
+  let ringY = 0;
+  const ease = 0.12;
+
+  // Track mouse position
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+    // Dot follows instantly
+    dot.style.left = `${mouseX}px`;
+    dot.style.top = `${mouseY}px`;
+  });
+
+  // Smooth ring follow via rAF
+  function animateRing() {
+    ringX += (mouseX - ringX) * ease;
+    ringY += (mouseY - ringY) * ease;
+
+    ring.style.left = `${ringX}px`;
+    ring.style.top = `${ringY}px`;
+
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  // Hover effect on interactive elements
+  const interactiveSelectors = 'a, button, [role="button"], summary, input, textarea, select, label';
+
+  document.addEventListener('mouseover', (e) => {
+    if ((e.target as Element).closest(interactiveSelectors)) {
+      ring.classList.add('is-hovering');
+      document.documentElement.style.cursor = 'none';
+    }
+  });
+
+  document.addEventListener('mouseout', (e) => {
+    if ((e.target as Element).closest(interactiveSelectors)) {
+      ring.classList.remove('is-hovering');
+    }
+  });
+
+  // Hide cursors when mouse leaves window
+  document.addEventListener('mouseleave', () => {
+    dot.style.opacity = '0';
+    ring.style.opacity = '0';
+  });
+
+  document.addEventListener('mouseenter', () => {
+    dot.style.opacity = '1';
+    ring.style.opacity = '1';
+  });
+</script>

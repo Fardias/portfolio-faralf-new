@@ -1,0 +1,28 @@
+---
+import type { Testimonial } from '../../data/site';
+import MuiIcon from '../icons/MuiIcon';
+
+interface Props {
+  testimonial: Testimonial;
+}
+
+const { testimonial } = Astro.props;
+const t = testimonial as Testimonial & { quoteId?: string };
+---
+
+<blockquote class="nb-shadow flex h-full flex-col border-2 border-border bg-surface p-6">
+  <MuiIcon name="FormatQuote" size={32} className="text-primary" />
+  <p
+    class="mt-4 flex-1 text-sm leading-relaxed text-text sm:text-base"
+    data-en={testimonial.quote}
+    data-id={t.quoteId ?? testimonial.quote}
+  >
+    "{testimonial.quote}"
+  </p>
+  <footer class="mt-6 border-t-2 border-border pt-4">
+    <cite class="not-italic">
+      <span class="block font-black text-text">{testimonial.author}</span>
+      <span class="mt-0.5 block text-sm font-medium text-muted">{testimonial.role}</span>
+    </cite>
+  </footer>
+</blockquote>

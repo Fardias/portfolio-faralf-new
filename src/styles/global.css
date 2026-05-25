@@ -1,0 +1,60 @@
+@import "tailwindcss";
+@import "@fontsource/rubik/400.css";
+@import "@fontsource/rubik/500.css";
+@import "@fontsource/rubik/600.css";
+@import "@fontsource/rubik/700.css";
+
+@theme {
+  --font-sans: "Rubik", ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: #fffdf5;
+  --color-surface: #fff8dc;
+  --color-primary: #f97316;
+  --color-primary-hover: #ea6c0a;
+  --color-accent: #facc15;
+  --color-text: #0f0f0f;
+  --color-muted: #3d3d3d;
+  --color-border: #0f0f0f;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+/* Neurobrutalism utility: bold offset shadow */
+.nb-shadow {
+  box-shadow: 4px 4px 0px #0f0f0f;
+}
+
+.nb-shadow-lg {
+  box-shadow: 6px 6px 0px #0f0f0f;
+}
+
+.nb-shadow-hover {
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.nb-shadow-hover:hover {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0px #0f0f0f;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

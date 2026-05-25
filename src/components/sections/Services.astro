@@ -1,0 +1,22 @@
+---
+import { site, translations } from '../../data/site';
+import SectionHeading from '../ui/SectionHeading.astro';
+import ServiceCard from '../ui/ServiceCard.astro';
+
+const en = translations.en.sections.services;
+const id = translations.id.sections.services;
+---
+
+<section id="services" class="py-16 sm:py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <SectionHeading
+      title={en.title}
+      titleId={id.title}
+      subtitle={en.subtitle}
+      subtitleId={id.subtitle}
+    />
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 md:grid-cols-3 md:gap-8">
+      {site.services.map((service) => <ServiceCard service={service} />)}
+    </div>
+  </div>
+</section>

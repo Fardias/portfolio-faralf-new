@@ -1,0 +1,66 @@
+---
+import { site, translations } from '../../data/site';
+import SectionHeading from '../ui/SectionHeading.astro';
+import MuiIcon from '../icons/MuiIcon';
+
+const en = translations.en.sections.about;
+const id = translations.id.sections.about;
+---
+
+<section id="about" class="py-16 sm:py-20 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <SectionHeading
+      title={en.title}
+      titleId={id.title}
+      subtitle={en.subtitle}
+      subtitleId={id.subtitle}
+    />
+    <div class="mt-12 max-w-3xl mx-auto">
+      <div>
+        <div
+          class="nb-shadow mb-6 inline-flex items-center gap-2 border-2 border-border bg-accent px-4 py-2 text-sm font-bold text-text"
+        >
+          <MuiIcon name="BusinessCenter" size={20} className="text-primary" />
+          <span
+            data-en={`${site.yearsExperience}+ ${en.experience}`}
+            data-id={`${site.yearsExperience}+ ${id.experience}`}
+          >
+            {site.yearsExperience}+ {en.experience}
+          </span>
+        </div>
+        <p
+          class="text-base leading-relaxed text-muted sm:text-lg"
+          data-en={site.about.bio}
+          data-id={site.about.bioId}
+        >
+          {site.about.bio}
+        </p>
+        <h3
+          class="mt-8 text-lg font-black text-text"
+          data-en={en.techStack}
+          data-id={id.techStack}
+        >
+          {en.techStack}
+        </h3>
+        <ul
+          class="mt-4 grid grid-cols-4 gap-4 sm:grid-cols-6"
+          aria-label="Skills and technologies"
+        >
+          {
+            site.about.skills.map((skill) => (
+              <li class="flex flex-col items-center gap-2 text-center">
+                <span
+                  class="nb-shadow flex h-12 w-12 items-center justify-center border-2 border-border bg-surface text-2xl"
+                  title={skill.name}
+                >
+                  <i class={`${skill.deviconClass} colored`} aria-hidden="true" />
+                </span>
+                <span class="text-xs font-bold text-muted">{skill.name}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
