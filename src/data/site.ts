@@ -23,14 +23,36 @@ export interface Service {
   icon: MuiIconName;
 }
 
+export type ProjectCategory = 'website' | 'mobile' | 'ai';
+
+export interface ProjectContent {
+  overview: string;
+  challenge: string;
+  solution: string;
+  outcome: string;
+}
+
 export interface Project {
   title: string;
   slug: string;
+  category: ProjectCategory;
   stack: string[];
   image: string;
   liveUrl?: string;
   detailsUrl?: string;
+  content?: ProjectContent;
 }
+
+export const dummyContent: ProjectContent = {
+  overview:
+    'This project was built to solve a real-world problem for a client. The goal was to deliver a fast, reliable, and maintainable solution that could scale with the business over time.',
+  challenge:
+    'The main challenge was integrating multiple data sources into a single coherent interface while keeping the user experience simple and intuitive. Performance and security were top priorities throughout the development process.',
+  solution:
+    'We designed a modular architecture that separates concerns cleanly. Each layer of the stack was chosen deliberately — prioritizing developer experience, runtime performance, and long-term maintainability.',
+  outcome:
+    'The final product launched on schedule and received positive feedback from end users. Key metrics improved significantly within the first month of deployment.',
+};
 
 export interface Skill {
   name: string;
@@ -182,7 +204,7 @@ export const site = {
   whatsappUrl: 'https://wa.me/6287882355688',
   email: 'dias.fathan2005@gmail.com',
   github: 'https://github.com/fardias',
-  linkedin: 'https://linkedin.com/in/yourusername',
+  linkedin: 'https://linkedin.com/in/fardias-a-179b0829a',
   nav: [
     { label: 'Services', labelId: 'Layanan', href: '/#services' },
     { label: 'Projects', labelId: 'Proyek', href: '/#projects' },
@@ -216,28 +238,33 @@ export const site = {
       descriptionId:
         'Asisten AI dan chatbot kustom yang terintegrasi ke produk atau alur kerja kamu.',
       icon: 'SmartToy',
+
     },
   ] satisfies Service[],
   projects: [
     {
-      title: 'E-Commerce Dashboard',
-      slug: 'e-commerce-dashboard',
-      stack: ['React', 'Node.js', 'PostgreSQL'],
-      image: '/images/project-1.svg',
-      liveUrl: '#',
-      detailsUrl: '/projects/e-commerce-dashboard',
-    },
-    {
-      title: 'Company Profile Site',
-      slug: 'company-profile-site',
-      stack: ['Astro', 'Tailwind'],
-      image: '/images/project-2.svg',
-      liveUrl: '#',
-      detailsUrl: '/projects/company-profile-site',
+      title: 'LensMate - Photographer Platform',
+      slug: 'lensmate-photographer-platform',
+      category: 'website',
+      stack: ['React', 'Vite', 'Tailwind CSS', 'React Icons'],
+      image: '/images/lensmate.png', 
+      liveUrl: 'https://lens-mate-compro.vercel.app/',
+      detailsUrl: '/projects/lensmate-photographer-platform',
+      content: {
+        overview:
+          'LensMate is a modern, premium company profile and on-demand marketplace platform connecting users with local professional photographers in Indonesia. The site features an interactive photographer catalog, dynamic pricing/service packages, and smooth booking/CTA flows.',
+        challenge:
+          'Creating a highly engaging, visually stunning interface that loads quickly and remains responsive on all devices. Additionally, integrating structured package configurations and direct messaging routes for immediate conversion without complex barriers.',
+        solution:
+          'We built a component-driven SPA using React and Vite with Vanilla CSS and Tailwind for high-fidelity responsive layouts. A curated dark-mode theme with rich micro-interactions, smooth sliding transitions, and integrated one-click WhatsApp action items is utilized.',
+        outcome:
+          'A sleek, high-performing corporate portfolio showcasing professional digital services with instant call-to-actions, resulting in high user engagement, premium user feedback, and optimized SEO-friendly responsive loading times.',
+      },
     },
     {
       title: 'Fitness Mobile App',
       slug: 'fitness-mobile-app',
+      category: 'mobile',
       stack: ['React Native', 'Firebase'],
       image: '/images/project-3.svg',
       liveUrl: '#',
@@ -245,25 +272,10 @@ export const site = {
     {
       title: 'AI Customer Support Bot',
       slug: 'ai-customer-support-bot',
+      category: 'ai',
       stack: ['Python', 'OpenAI', 'FastAPI'],
       image: '/images/project-4.svg',
       detailsUrl: '/projects/ai-customer-support-bot',
-    },
-    {
-      title: 'Booking Platform',
-      slug: 'booking-platform',
-      stack: ['Next.js', 'Prisma', 'MySQL'],
-      image: '/images/project-5.svg',
-      liveUrl: '#',
-      detailsUrl: '/projects/booking-platform',
-    },
-    {
-      title: 'Portfolio CMS',
-      slug: 'portfolio-cms',
-      stack: ['Astro', 'Contentful'],
-      image: '/images/project-6.svg',
-      liveUrl: '#',
-      detailsUrl: '/projects/portfolio-cms',
     },
   ] satisfies Project[],
   about: {

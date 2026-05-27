@@ -5,6 +5,13 @@ import ProjectCard from '../ui/ProjectCard.astro';
 
 const en = translations.en.sections.projects;
 const id = translations.id.sections.projects;
+
+const filters = [
+  { key: 'all',     labelEn: 'All',          labelId: 'Semua' },
+  { key: 'website', labelEn: 'Website',       labelId: 'Website' },
+  { key: 'mobile',  labelEn: 'Mobile Apps',   labelId: 'Aplikasi Mobile' },
+  { key: 'ai',      labelEn: 'Chatbot / AI',  labelId: 'Chatbot / AI' },
+];
 ---
 
 <section id="projects" class="border-y-2 border-border bg-surface py-16 sm:py-20 lg:py-24">
@@ -15,8 +22,85 @@ const id = translations.id.sections.projects;
       subtitle={en.subtitle}
       subtitleId={id.subtitle}
     />
-    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-      {site.projects.map((project) => <ProjectCard project={project} />)}
+
+    <!-- Filter buttons -->
+    <div class="mt-8 flex flex-wrap justify-center gap-3" role="group" aria-label="Filter projects">
+      {filters.map((f) => (
+        <button
+          class="filter-btn nb-shadow cursor-pointer border-2 border-border px-4 py-2 text-sm font-bold text-text transition-colors"
+          data-filter={f.key}
+          data-en={f.labelEn}
+          data-id={f.labelId}
+          aria-pressed={f.key === 'all' ? 'true' : 'false'}
+        >
+          {f.labelEn}
+        </button>
+      ))}
     </div>
+
+    <!-- Project grid -->
+    <div id="projects-grid" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+      {site.projects.map((project) => (
+        <div class="project-item" data-category={project.category}>
+          <ProjectCard project={project} />
+        </div>
+      ))}
+    </div>
+
+    <!-- Empty state -->
+    <p id="projects-empty" class="mt-10 hidden text-center text-base font-bold text-muted">
+      No projects in this category yet.
+    </p>
   </div>
 </section>
+
+<style>
+  .filter-btn[aria-pressed="true"] {
+    background-color: #f97316;
+    color: #ffffff;
+    border-color: #0f0f0f;
+  }
+
+  .filter-btn:not([aria-pressed="true"]):hover {
+    background-color: #facc15;
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px #0f0f0f;
+  }
+
+  .project-item {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .project-item.hidden {
+    display: none;
+  }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const items   = document.querySelectorAll<HTMLElement>('.project-item');
+  const empty   = document.getElementById('projects-empty')!;
+
+  function applyFilter(filter: string) {
+    let visible = 0;
+
+    items.forEach((item) => {
+      const match = filter === 'all' || item.dataset.category === filter;
+      item.classList.toggle('hidden', !match);
+      if (match) visible++;
+    });
+
+    empty.classList.toggle('hidden', visible > 0);
+
+    buttons.forEach((btn) => {
+      btn.setAttribute('aria-pressed', btn.dataset.filter === filter ? 'true' : 'false');
+    });
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => applyFilter(btn.dataset.filter!));
+  });
+
+  // Init
+  applyFilter('all');
+</script>

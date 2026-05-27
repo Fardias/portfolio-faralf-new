@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/ui/Navbar.astro';
 import Footer from '../../components/ui/Footer.astro';
 import MuiIcon from '../../components/icons/MuiIcon';
-import { site } from '../../data/site';
+import { site, dummyContent } from '../../data/site';
 
 export function getStaticPaths() {
   return site.projects
@@ -16,16 +16,7 @@ export function getStaticPaths() {
 
 const { project } = Astro.props;
 
-const dummyContent = {
-  overview:
-    'This project was built to solve a real-world problem for a client. The goal was to deliver a fast, reliable, and maintainable solution that could scale with the business over time.',
-  challenge:
-    'The main challenge was integrating multiple data sources into a single coherent interface while keeping the user experience simple and intuitive. Performance and security were top priorities throughout the development process.',
-  solution:
-    'We designed a modular architecture that separates concerns cleanly. Each layer of the stack was chosen deliberately — prioritizing developer experience, runtime performance, and long-term maintainability.',
-  outcome:
-    'The final product launched on schedule and received positive feedback from end users. Key metrics improved significantly within the first month of deployment.',
-};
+const projectContent = project.content || dummyContent;
 ---
 
 <Layout title={`${project.title} — ${site.name}`}>
@@ -93,22 +84,22 @@ const dummyContent = {
 
           <div class="nb-shadow border-2 border-border bg-surface p-6 sm:p-8">
             <h2 class="text-xl font-black text-text">Overview</h2>
-            <p class="mt-3 text-base leading-relaxed text-muted">{dummyContent.overview}</p>
+            <p class="mt-3 text-base leading-relaxed text-muted">{projectContent.overview}</p>
           </div>
 
           <div class="nb-shadow border-2 border-border bg-surface p-6 sm:p-8">
             <h2 class="text-xl font-black text-text">The Challenge</h2>
-            <p class="mt-3 text-base leading-relaxed text-muted">{dummyContent.challenge}</p>
+            <p class="mt-3 text-base leading-relaxed text-muted">{projectContent.challenge}</p>
           </div>
 
           <div class="nb-shadow border-2 border-border bg-surface p-6 sm:p-8">
             <h2 class="text-xl font-black text-text">The Solution</h2>
-            <p class="mt-3 text-base leading-relaxed text-muted">{dummyContent.solution}</p>
+            <p class="mt-3 text-base leading-relaxed text-muted">{projectContent.solution}</p>
           </div>
 
           <div class="nb-shadow border-2 border-border bg-surface p-6 sm:p-8">
             <h2 class="text-xl font-black text-text">Outcome</h2>
-            <p class="mt-3 text-base leading-relaxed text-muted">{dummyContent.outcome}</p>
+            <p class="mt-3 text-base leading-relaxed text-muted">{projectContent.outcome}</p>
           </div>
 
         </div>
