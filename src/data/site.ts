@@ -74,12 +74,14 @@ export interface I18n {
   };
   nav: {
     cta: string;
+    blog: string;
   };
   sections: {
     services: { title: string; subtitle: string };
     projects: { title: string; subtitle: string };
     about: { title: string; subtitle: string; techStack: string; experience: string };
     testimonials: { title: string; subtitle: string };
+    blog: { title: string; subtitle: string };
   };
   cards: {
     liveDemo: string;
@@ -108,6 +110,7 @@ export const translations: Record<Locale, I18n> = {
     },
     nav: {
       cta: 'Contact Me',
+      blog: 'Blog',
     },
     sections: {
       services: {
@@ -127,6 +130,10 @@ export const translations: Record<Locale, I18n> = {
       testimonials: {
         title: 'Testimonials',
         subtitle: 'What clients say about working together.',
+      },
+      blog: {
+        title: 'Blog',
+        subtitle: 'Articles, tutorials, and thoughts on web development, design, and technology.',
       },
     },
     cards: {
@@ -155,6 +162,7 @@ export const translations: Record<Locale, I18n> = {
     },
     nav: {
       cta: 'Hubungi Saya',
+      blog: 'Blog',
     },
     sections: {
       services: {
@@ -174,6 +182,10 @@ export const translations: Record<Locale, I18n> = {
       testimonials: {
         title: 'Testimoni',
         subtitle: 'Apa kata klien tentang bekerja bersama.',
+      },
+      blog: {
+        title: 'Blog',
+        subtitle: 'Artikel, tutorial, dan pemikiran tentang pengembangan web, desain, dan teknologi.',
       },
     },
     cards: {
@@ -206,6 +218,7 @@ export const site = {
   github: 'https://github.com/fardias',
   linkedin: 'https://linkedin.com/in/fardias-a-179b0829a',
   nav: [
+    { label: 'Blog', labelId: 'Blog', href: '/blog' },
     { label: 'Services', labelId: 'Layanan', href: '/#services' },
     { label: 'Projects', labelId: 'Proyek', href: '/#projects' },
     { label: 'About', labelId: 'Tentang', href: '/#about' },
